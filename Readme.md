@@ -38,17 +38,17 @@ Please provide GitHub link to application.
 # How to run it?
 Step 1.) Install docker <br/> 
 Step 2.) Build Dockerfile <br/> 
-    ```
+```
     docker build .
-    ```<br/> 
+```
 Step 3.) Run Docker image that was built in step 2 <br/> 
 ```
     docker run -d -p 8000:8000 <docker_image>
-```<br/> 
+```
 Step 4.) Run below command to see the running logs in container<br/> 
 ```
     docker logs -f ba30653deb5b
-```<br/> 
+```
 Step 5.) Send the below command to call the api<br/> 
 ```
     curl -X POST "http://localhost:8000/scrape" \
