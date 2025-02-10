@@ -33,3 +33,28 @@ Your task is to design and implement this tool, keeping in mind the following gu
 You are encouraged to make design decisions based on your understanding of the problem and the requirements provided, but usage of object oriented approach with abstractions will be considered as an advantage.
 
 Please provide GitHub link to application.
+
+
+# How to run it?
+Step 1.) Install docker
+Step 2.) Build Dockerfile 
+    ```
+    docker build .
+    ```
+Step 3.) Run Docker image that was built in step 2
+```
+    docker run -d -p 8000:8000 <docker_image>
+```
+Step 4.) Run below command to see the running logs in container
+```
+    docker logs -f ba30653deb5b
+```
+Step 5.) Send the below command to call the api
+```
+    curl -X POST "http://localhost:8000/scrape" \
+    -H "Content-Type: application/json" \
+    -H "token: auth-token"  -d '{
+      "target": "DENTALSTALL",
+      "meta_data": {"num_pages" : 2}
+    }'
+```
