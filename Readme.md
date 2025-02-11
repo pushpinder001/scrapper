@@ -52,9 +52,9 @@ Step 4.) Run below command to see the running logs in container<br/>
 Step 5.) Send the below command to call the api<br/> 
 ```
     curl -X POST "http://localhost:8000/scrape" \     
-    -H "Content-Type: application/json" \
-    -H "token: auth-token"  -d '{
-      "proxy_string": "TARGET:DENTALSTALL",
-      "num_pages" : 2
-    }
+    -H "Content-Type: application/json" \    
+    -H "token: auth-token"  -d '{    
+      "proxy_string": "TARGET:DENTALSTALL",    
+      "num_pages" : 2    
+    }'
 ```
