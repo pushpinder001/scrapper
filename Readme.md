@@ -36,12 +36,16 @@ Please provide GitHub link to application.
 
 
 # How to run it?
-Step 1.) Install docker <br/> 
-Step 2.) Run docker compose up command in scrapper director
+Step 1.) Clone the repo
+```
+    git clone https://github.com/pushpinder001/scrapper.git
+```
+Step 2.) Install docker <br/> 
+Step 3.) Run docker compose up command in scrapper director to start the scrapper service and see the logs
 ```
     docker compose up
 ```
-Step 3.) Send the below command to trigger the scrapper api<br/> 
+Step 4.) Send the below command to trigger the scrapper api<br/> 
 ```
     curl -X POST "http://localhost:8000/scrape" \     
     -H "Content-Type: application/json" \    
