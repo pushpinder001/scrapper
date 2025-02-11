@@ -6,13 +6,15 @@ from app.strategy.retry_strategy import RetryStrategy
 from app.service.scrapper_service_interface import ScrapperServiceInterface
 from app.service.cache_service_interface import CacheServiceInterface
 from app.service.notification_service_interface import NotificationServiceInterface
+from app import constants
 import logging
 import os
 import requests
 from bs4 import BeautifulSoup
 import json
+import datetime
 
-class ScrapperService(ScrapperServiceInterface):
+class DentalStallScrapperService(ScrapperServiceInterface):
     """
     Service class that handles the business logic for scrapping.
     """
@@ -32,14 +34,14 @@ class ScrapperService(ScrapperServiceInterface):
         self.LOGGER.info("Entered scrapper service" + str(scrapper_target))
         """Scrape product details from the website."""
 
-        page_urls = self.get_page_urls(scrape_request.meta_data.num_pages, scrapper_target)
+        page_urls = self.get_page_urls(scrape_request.num_pages, scrapper_target)
 
         # Updated products counts
         updated_products_cnt=0
 
         for page_url in page_urls:
             self.LOGGER.info("Page Url " + str(page_url))
-            product_feild_strs = scrape_request.meta_data.field_name
+            product_feild_strs = constants.DENTALSTALL_SCRAP_FIELDS
             
             product_feilds = []
             for prod_field in product_feild_strs:
@@ -71,6 +73,9 @@ class ScrapperService(ScrapperServiceInterface):
                                 saved_product[ProductFieldType.PRICE.field_name]):
                             # Update product data
                             updated_products_cnt+=1
+                            current_time = datetime.datetime.now()
+                            product["scrapper_target"] = scrapper_target.name
+                            product["updated_at"] = str(current_time)
                             self.repository.save_product(product)
                             self.cache_service.put(product_title, product)
                             self.LOGGER.info("Updated product " + str(product_title))

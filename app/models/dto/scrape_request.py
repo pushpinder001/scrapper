@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from app.models.dto.scrape_request_metadata import ScrapeRequestMetaData
+from typing import Optional
 
 class ScrapeRequestDTO(BaseModel):
-    target: str
-    meta_data: ScrapeRequestMetaData
+    num_pages: Optional[int] = 1
+    proxy_string: str = None

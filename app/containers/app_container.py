@@ -6,7 +6,7 @@ from app.repository.file_product_repository import FileProductRepository
 from app.service.std_out_notification_service import StdOutNotificationService
 from app.service.static_auth_service import StaticAuthService
 from app.service.in_memory_cache_service import InMemoryCacheService
-from app.service.scrapper_service import ScrapperService
+from app.service.dentalstall_scrapper_service import DentalStallScrapperService
 from app.strategy.simple_retry_strategy import SimpleRetryStrategy
 from app.strategy.product_price_parser_strategy import ProductPriceParserStrategy
 from app.strategy.product_image_path_parser_strategy import ProductImagePathParserStrategy
@@ -40,7 +40,7 @@ class AppContainer(containers.DeclarativeContainer):
     retry_strategy = providers.Singleton(SimpleRetryStrategy)
     cache_service = providers.Singleton(InMemoryCacheService)
 
-    scrapper_service = providers.Singleton(ScrapperService, repository=product_repository, 
+    dentalstall_scrapper_service = providers.Singleton(DentalStallScrapperService, repository=product_repository, 
             notification_service=notification_service, retry_strategy=retry_strategy, 
             cache_service = cache_service,
             product_parser_type_to_parser_mapping = product_parser_type_to_parser_mapping)
@@ -48,7 +48,7 @@ class AppContainer(containers.DeclarativeContainer):
     dispatcher_factory = providers.Factory(
         dict,
         modules = providers.Dict({
-                ScrapperTarget.DENTALSTALL.name : providers.Factory(scrapper_service)
+                ScrapperTarget.DENTALSTALL.name : providers.Factory(dentalstall_scrapper_service)
             }
         ),
     )
