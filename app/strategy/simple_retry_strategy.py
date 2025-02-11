@@ -9,9 +9,7 @@ class SimpleRetryStrategy(RetryStrategy):
         self.delay = constants.HTTP_REQUEST_RETRY_DELAY
         self.LOGGER = logging.getLogger(__name__)
 
-    def make_request(self, method, url, **kwargs):
-        self.LOGGER.info("Retries method " + method + " " + url)
-        
+    def make_request(self, method, url, **kwargs):        
         for cnt in range(2):
             try:
                 resp = make_http_request(method, url)
@@ -20,5 +18,7 @@ class SimpleRetryStrategy(RetryStrategy):
             except Exception as e:
                 if(cnt == 1):
                     raise e;
+                self.LOGGER.error("Unable to make scrape api call " + url + " Error " + str(e))
+                self.LOGGER.info("Waiting for " + str(self.delay) + " sec for another retry")
                 time.sleep(self.delay)
         
